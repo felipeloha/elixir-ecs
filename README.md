@@ -10,12 +10,12 @@ This repository contains:
 - a service discovery to connect the ecs service's instances/nodes
 - in the final deployment, the jobs run in only once instance of all connected
 
-###Getting started with docker 
+### Getting started with docker 
 - Build and run: `docker-compose build && docker-compose up`
 - In the browser call one of: localhost:4000, localhost:4000/krillin, localhost:4001, localhost:4001/krillin
 - You will see the node and the connected nodes. Beware of the configuration in the docker-compose
 
-###Getting started on aws
+### Getting started on aws
 - Build docker image: `docker build --progress=plain -t elixir-ecs:latest .`
 - Deploy infrastructure
     - `cd infrastructure && npm i && npm run build && cdk deploy`
