@@ -2,6 +2,8 @@
 This repository is a minimal setup of an elixir application running on multiple connected nodes on aws as fargate services. 
 Each instance has a cron job that depending on the configuration can run on every node, on one node of the service or on one node of connected nodes.
 
+The services are called krilling and vegeta so that they can be distinguished while testing and analyzing the logs.
+
 This repository contains:
 - an elixir application with a quantum cron job
 - an aws infrastructure with two fargate services
