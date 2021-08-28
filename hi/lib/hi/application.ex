@@ -19,7 +19,7 @@ defmodule Hi.Application do
       # Start the Telemetry supervisor
       HiWeb.Telemetry,
       # only one scheduler per cluster
-      #Hi.Scheduler,
+      # Hi.Scheduler,
       {Highlander, Hi.Scheduler},
       # Start the PubSub system
       {Phoenix.PubSub, name: Hi.PubSub},
