@@ -19,12 +19,12 @@ This repository contains:
 - Build docker image: `docker build --progress=plain -t elixir-ecs:latest .`
 - Deploy infrastructure
     - `cd infrastructure && npm i && npm run build && cdk deploy`
-    - Right after the ECR repo is created, you wil have to push your docker image to ECR as:
+    - Right after the ECR repo is created, you will have to push your docker image to ECR so that the ECS service finds them when it tries to start:
     ``` 
   docker tag elixir-ecs:latest AWS_ACCOUNT.dkr.ecr.AWS_REGION.amazonaws.com/elixir-ecs:latest
   docker push AWS_ACCOUNT.dkr.ecr.AWS_REGION.amazonaws.com/elixir-ecs:latest  
   ```
-- when the deployment is done you will see the load balancer url on the console
+- when the deployment is done you will see the load balancer url LB_URL on the console
 
 ### Viewing the data
 The two "services" one is shown with LB_URL and the other with LB_URL/krillin.
