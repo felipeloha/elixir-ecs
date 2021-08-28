@@ -10,7 +10,12 @@ This repository contains:
 - a service discovery to connect the ecs service's instances/nodes
 - in the final deployment, the jobs run in only once instance of all connected
 
-Getting started:
+###Getting started with docker 
+- Build and run: `docker-compose build && docker-compose up`
+- In the browser call one of: localhost:4000, localhost:4000/krillin, localhost:4001, localhost:4001/krillin
+- You will see the node and the connected nodes. Beware of the configuration in the docker-compose
+
+###Getting started on aws
 - Build docker image: `docker build --progress=plain -t elixir-ecs:latest .`
 - Deploy infrastructure
     - `cd infrastructure && npm i && npm run build && cdk deploy`
@@ -21,16 +26,18 @@ Getting started:
   ```
 - when the deployment is done you will see the load balancer url on the console
 
-There are two "services" one is shown with LB_URL and the other with LB_URL/krillin.
+### viewing the data
+The two "services" one is shown with LB_URL and the other with LB_URL/krillin.
 
 They display the current node and the connected nodes. Per default only the nodes within a service are connected. 
 
-If you need to connect all nodes of all services:
+### Connecting all nodes of all services
 - go to `lib/app-resources.ts:37`
 - change the configuration so that all nodes have the same name and query for the same name
 - build and deploy the infrastructure again
 
-The jobs are run once per cluster. This means that if all nodes are connected, the jobs will run only in one instance of all services.
+### Jobs
+The jobs run once per cluster. This means that if all nodes are connected, the jobs will run only in one instance of all services.
 If only the instances within a node are connected, the job will run on one instance of each service.
 
 the logs will show something like:
