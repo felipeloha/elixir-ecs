@@ -5,24 +5,37 @@ defmodule Hi.Application do
 
   use Application
 
+  defp get_env(name, default) do
+    case System.fetch_env(name) do
+      {:ok, env} -> env
+      :error -> default
+    end
+  end
+
   def start(_type, _args) do
     # gossip topologies for local testing with docker compose
-    #    topologies = [
-    #      ecs: [
-    #        strategy: Cluster.Strategy.Gossip
-    #      ]
-    #    ]
+    local_topology = [
+      ecs: [
+        strategy: Cluster.Strategy.Gossip
+      ]
+    ]
 
-    topologies = [
+    dns_poll_topology = [
       ecs: [
         strategy: Cluster.Strategy.DNSPoll,
         config: [
           polling_interval: 1000,
-          query: System.fetch_env!("SERVICE_DISCOVERY_ENDPOINT") || "ecs.local",
-          node_basename: System.fetch_env!("NODE_NAME_QUERY") || "node.local"
+          query: get_env("SERVICE_DISCOVERY_ENDPOINT", "ecs.local"),
+          node_basename: get_env("NODE_NAME_QUERY", "node.local")
         ]
       ]
     ]
+
+    topologies =
+      case get_env("TOPOLOGY_TYPE", false) do
+        "local" -> local_topology
+        _ -> dns_poll_topology
+      end
 
     children = [
       {Cluster.Supervisor, [topologies, [name: Hi.ClusterSupervisor]]},

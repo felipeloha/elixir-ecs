@@ -34,8 +34,12 @@ class Service extends cdk.NestedStack {
             environment: {
                 RELEASE_COOKIE: 'my-cookie',
                 SERVICE_DISCOVERY_ENDPOINT: `${props.discoveryService.serviceName}.${props.discoveryService.namespace.namespaceName}`,
-                NODE_NAME: 'dbz',
-                NODE_NAME_QUERY: 'dbz',
+                //##### connect all instances of all services
+                //NODE_NAME: 'dbz',
+                //NODE_NAME_QUERY: 'dbz',
+                //##### connect only instances within a service
+                NODE_NAME: `${props.serviceName}-dbz`,
+                NODE_NAME_QUERY: `${props.serviceName}-dbz`,
             },
         });
         container.addPortMappings({ containerPort });
@@ -102,7 +106,7 @@ export class AppResources extends cdk.NestedStack {
 
         this.connectServices(props);
 
-        listener.addTargets('vegetaTarget', {
+        const vegetaTargetGroup = listener.addTargets('vegetaTarget', {
             port: 80,
             targets: [this.vegetaService],
             healthCheck: {
@@ -112,7 +116,9 @@ export class AppResources extends cdk.NestedStack {
                 unhealthyThresholdCount: 5,
             },
         });
-        listener.addTargets('krillinTarget', {
+        vegetaTargetGroup.setAttribute('deregistration_delay.timeout_seconds', '5');
+
+        const krillinTargetGroup = listener.addTargets('krillinTarget', {
             priority: 10,
             port: 80,
             conditions: [elbv2.ListenerCondition.pathPatterns(['/krillin', '/krillin/*'])],
@@ -124,6 +130,7 @@ export class AppResources extends cdk.NestedStack {
                 unhealthyThresholdCount: 5,
             },
         });
+        krillinTargetGroup.setAttribute('deregistration_delay.timeout_seconds', '5');
     }
 
     private createBaseResources(props: AppResourcesProps) {

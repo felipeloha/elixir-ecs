@@ -7,6 +7,7 @@ services:
       - RELEASE_NODE=app@hi_krillin.host
       - RELEASE_DISTRIBUTION=name
       - RELEASE_COOKIE=mycookie
+      - TOPOLOGY_TYPE=local
     ports:
       - "127.0.0.1:4001:4000"
   app2:
@@ -16,5 +17,6 @@ services:
       - RELEASE_NODE=app@hi_vegeta.host
       - RELEASE_DISTRIBUTION=name
       - RELEASE_COOKIE=mycookie
+      - TOPOLOGY_TYPE=local
     ports:
       - "127.0.0.1:4002:4000"
