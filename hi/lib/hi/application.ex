@@ -6,9 +6,21 @@ defmodule Hi.Application do
   use Application
 
   def start(_type, _args) do
+    # gossip topologies for local testing with docker compose
+    #    topologies = [
+    #      ecs: [
+    #        strategy: Cluster.Strategy.Gossip
+    #      ]
+    #    ]
+
     topologies = [
       ecs: [
-        strategy: Cluster.Strategy.Gossip
+        strategy: Cluster.Strategy.DNSPoll,
+        config: [
+          polling_interval: 1000,
+          query: System.fetch_env!("SERVICE_DISCOVERY_ENDPOINT") || "ecs.local",
+          node_basename: System.fetch_env!("NODE_NAME_QUERY") || "node.local"
+        ]
       ]
     ]
 

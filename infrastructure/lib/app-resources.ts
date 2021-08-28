@@ -34,6 +34,8 @@ class Service extends cdk.NestedStack {
             environment: {
                 RELEASE_COOKIE: 'my-cookie',
                 SERVICE_DISCOVERY_ENDPOINT: `${props.discoveryService.serviceName}.${props.discoveryService.namespace.namespaceName}`,
+                NODE_NAME: 'dbz',
+                NODE_NAME_QUERY: 'dbz',
             },
         });
         container.addPortMappings({ containerPort });
@@ -74,6 +76,7 @@ export class AppResources extends cdk.NestedStack {
         this.loadBalancer = new elbv2.ApplicationLoadBalancer(this, 'DBZLB', {
             vpc: props.vpc,
             internetFacing: true,
+            loadBalancerName: `${props.prefix}-load-balancer`,
         });
         const listener = this.loadBalancer.addListener('Listener', { port: 80 });
 
@@ -112,7 +115,7 @@ export class AppResources extends cdk.NestedStack {
         listener.addTargets('krillinTarget', {
             priority: 10,
             port: 80,
-            conditions: [elbv2.ListenerCondition.pathPatterns(['/krillin', '/krillin'])],
+            conditions: [elbv2.ListenerCondition.pathPatterns(['/krillin', '/krillin/*'])],
             targets: [this.krillinService],
             healthCheck: {
                 path: '/',

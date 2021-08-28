@@ -17,6 +17,7 @@ defmodule HiWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/krillin", PageController, :krillin
   end
 
   # Other scopes may use custom stacks.

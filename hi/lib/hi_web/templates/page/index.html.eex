@@ -3,4 +3,5 @@
 
   <div>Self: <%= @self %></div>
   <div>Nodes: <%=inspect(@nodes) %></div>
+  <div>Service: <%=inspect(@service) %></div>
 </section>
