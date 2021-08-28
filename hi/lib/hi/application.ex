@@ -6,7 +6,14 @@ defmodule Hi.Application do
   use Application
 
   def start(_type, _args) do
+    topologies = [
+      chat: [
+        strategy: Cluster.Strategy.Gossip
+      ]
+    ]
+
     children = [
+      {Cluster.Supervisor, [topologies, [name: Hi.ClusterSupervisor]]},
       # Start the Ecto repository
       #Hi.Repo,
       # Start the Telemetry supervisor
