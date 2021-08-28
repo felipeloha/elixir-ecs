@@ -2,7 +2,7 @@
 This repository is a minimal setup of an elixir application running on multiple connected nodes on aws as fargate services. 
 Each instance has a cron job that depending on the configuration can run on every node, on one node of the service or on one node of connected nodes.
 
-The services are called krilling and vegeta so that they can be distinguished while testing and analyzing the logs.
+The services are called krillin and vegeta so that they can be distinguished while testing and analyzing the logs.
 
 This repository contains:
 - an elixir application with a quantum cron job
@@ -26,7 +26,7 @@ This repository contains:
   ```
 - when the deployment is done you will see the load balancer url on the console
 
-### viewing the data
+### Viewing the data
 The two "services" one is shown with LB_URL and the other with LB_URL/krillin.
 
 They display the current node and the connected nodes. Per default only the nodes within a service are connected. 
