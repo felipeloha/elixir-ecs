@@ -13,19 +13,18 @@ defmodule Hi.Application do
     ]
 
     children = [
-
+      {Cluster.Supervisor, [topologies, [name: Hi.ClusterSupervisor]]},
       # Start the Ecto repository
-      #Hi.Repo,
+      # Hi.Repo,
       # Start the Telemetry supervisor
       HiWeb.Telemetry,
-      Hi.Scheduler,
+      # only one scheduler per cluster
+      #Hi.Scheduler,
+      {Highlander, Hi.Scheduler},
       # Start the PubSub system
       {Phoenix.PubSub, name: Hi.PubSub},
       # Start the Endpoint (http/https)
-      HiWeb.Endpoint,
-      {Cluster.Supervisor, [topologies, [name: Hi.ClusterSupervisor]]},
-      # Start a worker by calling: Hi.Worker.start_link(arg)
-      # {Hi.Worker, arg}
+      HiWeb.Endpoint
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

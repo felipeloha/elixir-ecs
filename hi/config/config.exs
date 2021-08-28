@@ -8,9 +8,10 @@
 use Mix.Config
 
 config :hi, Hi.Scheduler,
-  debug_logging: false,
+  debug_logging: true,
+  global: true,
   timezone: :utc,
-  run_strategy: {Quantum.RunStrategy.Random, :cluster},
+  run_strategy: {Quantum.RunStrategy.Local, :cluster},
   overlap: false
 
 # config :hi,

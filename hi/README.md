@@ -18,3 +18,12 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Docs: https://hexdocs.pm/phoenix
   * Forum: https://elixirforum.com/c/phoenix-forum
   * Source: https://github.com/phoenixframework/phoenix
+
+
+#local service discovery
+MIX_ENV=prod PORT=4000 iex --sname a -S mix phx.server
+MIX_ENV=prod PORT=4001 iex --sname b -S mix phx.server
+
+#docker compose
+docker-compose build
+docker-compose up
