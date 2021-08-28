@@ -7,7 +7,13 @@
 # General application configuration
 use Mix.Config
 
-#config :hi,
+config :hi, Hi.Scheduler,
+  debug_logging: false,
+  timezone: :utc,
+  run_strategy: {Quantum.RunStrategy.Random, :cluster},
+  overlap: false
+
+# config :hi,
 #  ecto_repos: [Hi.Repo]
 
 # Configures the endpoint

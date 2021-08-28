@@ -7,21 +7,23 @@ defmodule Hi.Application do
 
   def start(_type, _args) do
     topologies = [
-      chat: [
+      ecs: [
         strategy: Cluster.Strategy.Gossip
       ]
     ]
 
     children = [
-      {Cluster.Supervisor, [topologies, [name: Hi.ClusterSupervisor]]},
+
       # Start the Ecto repository
       #Hi.Repo,
       # Start the Telemetry supervisor
       HiWeb.Telemetry,
+      Hi.Scheduler,
       # Start the PubSub system
       {Phoenix.PubSub, name: Hi.PubSub},
       # Start the Endpoint (http/https)
-      HiWeb.Endpoint
+      HiWeb.Endpoint,
+      {Cluster.Supervisor, [topologies, [name: Hi.ClusterSupervisor]]},
       # Start a worker by calling: Hi.Worker.start_link(arg)
       # {Hi.Worker, arg}
     ]
