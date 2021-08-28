@@ -1,0 +1,6 @@
+<section class="phx-hero">
+  <h1><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h1>
+
+  <div>Self: <%= @self %></div>
+  <div>Nodes: <%=inspect(@nodes) %></div>
+</section>
