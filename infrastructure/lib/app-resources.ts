@@ -154,6 +154,7 @@ export class AppResources extends cdk.NestedStack {
     }
 
     private connectServices(props: AppResourcesProps) {
+        //connect instances of both services
         this.krillinService.connections.allowFrom(
             this.vegetaService,
             ec2.Port.allTcp(),
@@ -164,6 +165,7 @@ export class AppResources extends cdk.NestedStack {
             ec2.Port.allTcp(),
             `${props.prefix} vegeta to krillin`,
         );
+        //connect instances within services
         this.krillinService.connections.allowFrom(
             this.krillinService,
             ec2.Port.allTcp(),
